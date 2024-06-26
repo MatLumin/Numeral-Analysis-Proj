@@ -6,7 +6,7 @@ from floating_point_error_fixer import cut_floating_point_to_precision;
 
 
 def dbp(n, h, target_x, current_x, current_y, previous_x, previous_y):
-	msg:str = """
+	msg:str = f"""
 	n={n}
 	h={h}
 	target_x={target_x}
@@ -15,6 +15,7 @@ def dbp(n, h, target_x, current_x, current_y, previous_x, previous_y):
 	previous_x={previous_x}
 	previous_y={previous_y}
 	"""
+	print(msg);
 
 
 def solve_by_tailor_3rd(target_x:float, y:float, x:float, h:float, f, f_, f__)->float:
@@ -22,7 +23,7 @@ def solve_by_tailor_3rd(target_x:float, y:float, x:float, h:float, f, f_, f__)->
 	current_x:float = 0;
 	current_y:float = 0;
 	previous_x:float = x;
-	privious_y:float = y;
+	previous_y:float = y;
 	while True:
 		current_x = x + (n * h);
 
@@ -68,12 +69,16 @@ def solve_by_tailor_3rd(target_x:float, y:float, x:float, h:float, f, f_, f__)->
 
 if __name__ == "__main__":
 	def f(x:float, y:float)->float:
-		return x*math.sin(y)+1;
+		return x*sin(y)+1;
 
 	def f_(x:float, y:float)->float:
-		return f(x,y)+math.sin(y);
+		return -x*sin(y);
 
 	def f__(x:float, y:float)->float:
-		return f(x,y)+math.sin(y);
+		return cos(y)**2;
+
+	solve_by_tailor_3rd(
+		target_x=0.1, y=0, x=0, h=0.1, f=f, f_=f_, f__=f__
+		);
 
 
